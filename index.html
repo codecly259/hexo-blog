@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://codecly259.github.io/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Søk"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://codecly259.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-2016-03-2016-03-01-using-redis-in-windows" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/16/2016-03-2016-03-01-using-redis-in-windows/" class="article-date">
+  <time datetime="2016-05-16T14:09:24.414Z" itemprop="datePublished">2016-05-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/technology/">technology</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/16/2016-03-2016-03-01-using-redis-in-windows/">在windows操作系统中使用redis</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>TOC<br>{:toc}</li>
+</ul>
+<p>redis官方不支持windows系统，官网上的描述为：</p>
+<blockquote>
+<p>The Redis project does not officially support Windows. However, the Microsoft Open Tech group develops and maintains this Windows port targeting Win64</p>
+</blockquote>
+<p>大意为：redis官方是不支持windows的。但是，微软开源技术组织为win64用户开发并维护这个windows版本。要了解更多，请看<a href="https://github.com/MSOpenTech/redis" target="_blank" rel="external">项目地址</a></p>
+<p>redis官方支持类unix（linux和mac）系统，在Linux和mac中使用只要按官方文档来即可。<br>但是官方不支持windows操作系统，只是微软开源技术组织(Microsoft Open Tech group)在Github开发了一个win64的redis版本。</p>
+<h2 id="快速开始："><a href="#快速开始：" class="headerlink" title="快速开始："></a>快速开始：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/MSOpenTech/redis/releases/download/win-3.0.501/Redis-x64-3.0.501.zip #下载</span><br><span class="line">rar x-t-o-p Redis-x64-2.8.2400.zip   #解压</span><br><span class="line">cd Redis-x64-2.8.2400            #到redis目录</span><br><span class="line">redis-server redis.windows.conf  #启动服务，需要先修改配置文件，要不然会出错</span><br><span class="line">redis-cli -h $&#123;ip&#125; -p $&#123;port&#125;    #客户端连接，ip默认为127.0.0.1，port默认为6379</span><br></pre></td></tr></table></figure>
+<ul>
+<li>1,2步命令不一定可以使用，只是为了说明步骤；</li>
+<li>3,4步必须要以管理员权限运行</li>
+<li>以上只是为了说明快速开始的步骤，具体细节下面介绍。</li>
+</ul>
+<h2 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h2><p>安装很简单，在<a href="https://github.com/MSOpenTech/redis/releases" target="_blank" rel="external">github上项目地址releases</a><br>中找到合适的版本下载。</p>
+<ul>
+<li>可以选择<code>.msi</code>格式的微软格式安装包,安装非常方便，双击根据提示下一步即可。可以选择添加到环境变量中，占用最大内存等。</li>
+<li>如果下载<code>.zip</code>格式的压缩文件,最新3.0版本同样方便，只要解压缩即可。如需设置到环境变量需要自行设置。</li>
+</ul>
+<h2 id="运行服务端"><a href="#运行服务端" class="headerlink" title="运行服务端"></a>运行服务端</h2><p>我的电脑操作系统是64位win8.1，下载的redis版本是3.0.501。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"># 以管理员身份运行cmd</span><br><span class="line">C:\windows\system32&gt;d:</span><br><span class="line">D:\&gt;cd &quot;Program Files\Redis-x64-3.0.501&quot;</span><br><span class="line">D:\Program Files\Redis-x64-3.0.501&gt;redis-server redis.windows.conf</span><br><span class="line">                _._</span><br><span class="line">           _.-``__ &apos;&apos;-._</span><br><span class="line">      _.-``    `.  `_.  &apos;&apos;-._           Redis 3.0.501 (00000000/0) 64 bit</span><br><span class="line">  .-`` .-```.  ```\/    _.,_ &apos;&apos;-._</span><br><span class="line"> (    &apos;      ,       .-`  | `,    )     Running in standalone mode</span><br><span class="line"> |`-._`-...-` __...-.``-._|&apos;` _.-&apos;|     Port: 6379</span><br><span class="line"> |    `-._   `._    /     _.-&apos;    |     PID: 15888</span><br><span class="line">  `-._    `-._  `-./  _.-&apos;    _.-&apos;</span><br><span class="line"> |`-._`-._    `-.__.-&apos;    _.-&apos;_.-&apos;|</span><br><span class="line"> |    `-._`-._        _.-&apos;_.-&apos;    |           http://redis.io</span><br><span class="line">  `-._    `-._`-.__.-&apos;_.-&apos;    _.-&apos;</span><br><span class="line"> |`-._`-._    `-.__.-&apos;    _.-&apos;_.-&apos;|</span><br><span class="line"> |    `-._`-._        _.-&apos;_.-&apos;    |</span><br><span class="line">  `-._    `-._`-.__.-&apos;_.-&apos;    _.-&apos;</span><br><span class="line">      `-._    `-.__.-&apos;    _.-&apos;</span><br><span class="line">          `-._        _.-&apos;</span><br><span class="line">              `-.__.-&apos;</span><br><span class="line">			  </span><br><span class="line">[15888] 01 Mar 23:17:05.883 # Server started, Redis version 3.0.501</span><br><span class="line">[15888] 01 Mar 23:17:05.883 * DB loaded from disk: 0.000 seconds</span><br><span class="line">[15888] 01 Mar 23:17:05.883 * The server is now ready to accept connections on p</span><br><span class="line">ort 6379</span><br></pre></td></tr></table></figure>
+<h2 id="客户端连接"><a href="#客户端连接" class="headerlink" title="客户端连接"></a>客户端连接</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># 以管理员身份运行cmd</span><br><span class="line">#默认会连接本地6379端口的服务</span><br><span class="line">C:\windows\system32&gt;redis-cli    #redis安装路径已添加到环境变量中</span><br><span class="line">127.0.0.1:6379&gt; ping</span><br><span class="line">PONG</span><br><span class="line">127.0.0.1:6379&gt;</span><br><span class="line"></span><br><span class="line">#如果要指定ip和端口</span><br><span class="line">C:\windows\system32&gt;redis-cli -h $&#123;your serve ip&#125; -p $&#123;port&#125;</span><br><span class="line">your server ip:port&gt; ping</span><br><span class="line">(error) ERR operation not permitted  #这个是因为设置了登录需要密码验证</span><br><span class="line">your server ip:port&gt; auth $&#123;your password&#125;</span><br><span class="line">OK</span><br><span class="line">your server ip:port&gt; ping</span><br><span class="line">PONG</span><br><span class="line">your server ip:port&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="redis相关命令"><a href="#redis相关命令" class="headerlink" title="redis相关命令"></a>redis相关命令</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://codecly259.github.io/2016/05/16/2016-03-2016-03-01-using-redis-in-windows/" data-id="cioa40q1f0001tcxns6eqpi1o" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/windows/">windows</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-2016-02-2016-02-21-detective-chinatown-short-conetnt" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/16/2016-02-2016-02-21-detective-chinatown-short-conetnt/" class="article-date">
+  <time datetime="2016-05-16T14:09:24.392Z" itemprop="datePublished">2016-05-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/movie/">movie</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/16/2016-02-2016-02-21-detective-chinatown-short-conetnt/">唐人街探案中的一些对白</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>TOC<br>{:toc}</li>
+</ul>
+<p>电影<code>唐人街探案</code>中的一些对白和场景</p>
+<h2 id="1-最后神探小结巴（当然此时已经不结巴了）和”腹黑”小萝莉的对话"><a href="#1-最后神探小结巴（当然此时已经不结巴了）和”腹黑”小萝莉的对话" class="headerlink" title="1. 最后神探小结巴（当然此时已经不结巴了）和”腹黑”小萝莉的对话"></a>1. 最后神探小结巴（当然此时已经不结巴了）和”腹黑”小萝莉的对话</h2><p>（神探走进小萝莉的病房，小萝莉坐在病床上看书，看到小结巴来了，露出天真无邪的笑脸）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">小萝莉：你不是今天回国吗？</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">小结巴：我...我想给你讲个故事（刚开始还是接吧了一下）</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">小萝莉：你怎么和那个大叔一样，都爱讲故事</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">小结巴：一个男孩失踪了，他的父亲一直在找他。他后来怀疑他儿子死了，更重要的是，他怀疑杀害他儿子的可能是一个女孩。  </span><br><span class="line">女孩发现了，她担心暴露，所以，想除掉这个父亲。她知道养父对自己异常的爱，所以，她编造了一本日记，并故意让养父看到。  </span><br><span class="line">我一直在想这本日记后边被撕掉的部分会是什么，是什么不想给我们看到。也许，是杀人方法吧。</span><br></pre></td></tr></table></figure>
+<p>（小萝莉配音旁白）</p>
+<blockquote>
+<p>我如果能杀死他<br>我会先找到一辆报废的车<br>和一个替死鬼<br>我会在监控录像覆盖前潜入他家<br>我要让他受到千倍万倍的惩罚  </p>
+</blockquote>
+<p>（当然电影里面的笔记片段更详细：）</p>
+<blockquote>
+<p> 如果我能杀死他，我会先找一辆报废的汽车和一个替死鬼。<br> 我知道他们家周围的监控录像是七天覆盖一次，我会再一周前就潜伏进去。<br> 我会找到一个提货的人，再我杀死他的那天晚上去工坊提货。我会打扮成他的样子，钻到他的箱子里去，我会把他的尸体放到工作室里，让他以为死的人还活着。<br> 让他以为运出去的是佛像。监控录像里，只会拍下送货的人，他便会成为凶手。<br> 我会让他受到千倍万倍的惩罚<br> 我会让他受到千辈万倍的惩罚<br> 我会让他受到千倍万倍的惩罚<br> 我会让他受到千辈万倍的惩罚<br> 我会让他受到千倍万倍的惩罚<br> 我会让他受到千辈万…（还在手写。这句重复这么多遍，强调恨的有多深！！）</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">女孩没想到我们会找上门，她改变了计划。正好可以利用我们，摆脱她变态的养父。  </span><br><span class="line">那本日记出现的时间、燃烧的速度都太巧了。但女孩没想到一点，她诬陷非礼她的那个男人，是个同性恋</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">小萝莉：你说话好像不结巴了（转移话题）</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">小结巴：当然，这些都是假设，也没有证据可以证明一个死人的性取向。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">小萝莉：可是我真的听不懂 （还在装无辜）</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">小结巴：当我没说</span><br></pre></td></tr></table></figure>
+<p>（小结巴说完转头准备离开病房）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">小萝莉：这本书上说，个体生命不同,但这世界善恶总量不变。每个人从出生就注定扮演各自的角色，  </span><br><span class="line">有的是善，有的是恶。你呢？</span><br><span class="line">（小结巴转过身，看到小萝莉**惊悚的笑脸**，从之前天真无邪到如此惊悚阴险的转变！！！！！  </span><br><span class="line">这个我给年度最佳惊悚瞬间奖）</span><br><span class="line">恶人是不是该这么笑？</span><br><span class="line">（小结巴走上前，拿出桌子上的一张纸，对折树立放在小萝莉面前，这里是和电影前面有对应。  </span><br><span class="line">可能是表示【万物两级，善恶对立。有恶的，才需要善的】）</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://codecly259.github.io/2016/05/16/2016-02-2016-02-21-detective-chinatown-short-conetnt/" data-id="cioa40q1f0003tcxnrb5ycvqm" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/唐人街探案/">唐人街探案</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/影评/">影评</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-2016-02-2016-02-20-use-jekyll-bootstrap" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/16/2016-02-2016-02-20-use-jekyll-bootstrap/" class="article-date">
+  <time datetime="2016-05-16T14:09:24.376Z" itemprop="datePublished">2016-05-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/dialy/">dialy</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/16/2016-02-2016-02-20-use-jekyll-bootstrap/">快速使用jekyll bootstrap主题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>目录<br>{:toc}</li>
+</ul>
+<p>本文介绍jekyll搭建基于jekyll-bootstrap主题的静态博客</p>
+<h2 id="本地运行jekyll-bootstrap"><a href="#本地运行jekyll-bootstrap" class="headerlink" title="本地运行jekyll-bootstrap"></a>本地运行jekyll-bootstrap</h2><blockquote>
+<p>首先请确认本地已安装好jekyll相关环境：包括git,ruby,rubygem,python,pygments,jekyll等</p>
+</blockquote>
+<p>在github上下载jekyll-bootstrap并使用jekyll本地运行</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/plusjade/jekyll-bootstrap.git</span><br><span class="line"><span class="built_in">cd</span> jekyll-bootstrap</span><br><span class="line">git remote <span class="built_in">set</span>-url origin https://github/your_user_name/program_name(your_user_name.github.io)</span><br><span class="line">git push origin master / git push origin gh-pages (program_name)</span><br><span class="line">jekyll serve</span><br></pre></td></tr></table></figure>
+<p>其中中间的设置url和发布是发布到github上的，不是本地运行必须。<br>成功启动后访问localhost:4000即可访问博客主页。</p>
+<h2 id="jekyll-bootstrap主题的安装和选择"><a href="#jekyll-bootstrap主题的安装和选择" class="headerlink" title="jekyll-bootstrap主题的安装和选择"></a>jekyll-bootstrap主题的安装和选择</h2><p>以上启动jekyll-bootstrap是默认使用twitter主题，如果想更改主题<br>可以使用<code>rake</code>下载安装主题。</p>
+<h3 id="安装主题"><a href="#安装主题" class="headerlink" title="安装主题"></a>安装主题</h3><blockquote>
+<p>首先确认rake没有问题，我在安装的时候就报错<code>can not load file ...</code>，经查找没有安装rake编译模块。<br>使用<code>gem install rake</code>进行安装</p>
+</blockquote>
+<h4 id="使用git地址安装"><a href="#使用git地址安装" class="headerlink" title="使用git地址安装"></a>使用git地址安装</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rake theme:install git=&quot;https://github.com/jekyllbootstrap/theme-the-program.git&quot;</span><br></pre></td></tr></table></figure>
+<p>安装完成后会提示是否使用此主题，输入<code>Y</code>回车使用该主题。</p>
+<h4 id="下载压缩包后安装"><a href="#下载压缩包后安装" class="headerlink" title="下载压缩包后安装"></a>下载压缩包后安装</h4><p>在网上下载主题的并解压到<code>./_theme_packages</code>目录下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rake theme:install name=&quot;theme-name&quot;</span><br></pre></td></tr></table></figure></p>
+<h3 id="切换主题"><a href="#切换主题" class="headerlink" title="切换主题"></a>切换主题</h3><p>主题安装后,也可以通过<code>rake</code>在主题间进行切换<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rake theme:switch name=&quot;the-program&quot;</span><br></pre></td></tr></table></figure></p>
+<h2 id="更多阅读"><a href="#更多阅读" class="headerlink" title="更多阅读"></a>更多阅读</h2><ul>
+<li><a href="http://jekyllrb.com/docs/home/" target="_blank" rel="external">jekyll 官方文档</a></li>
+<li><a href="http://jekyll.bootcss.com/docs/home/" target="_blank" rel="external">bootstrap中文团队翻译的jekyll文档</a></li>
+<li><a href="http://jekyllbootstrap.com/" target="_blank" rel="external">The Quickest Way to Blog on GitHub Pages</a></li>
+<li><a href="http://jekyllbootstrap.com/usage/jekyll-theming.html" target="_blank" rel="external">上面网站的<code>Using Themes</code>部分</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://codecly259.github.io/2016/05/16/2016-02-2016-02-20-use-jekyll-bootstrap/" data-id="cioa40q1f0006tcxn4ewk0olm" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jekyll-bootstrap/">jekyll bootstrap</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-2016-02-2016-02-04-common-git-comand-line" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/16/2016-02-2016-02-04-common-git-comand-line/" class="article-date">
+  <time datetime="2016-05-16T14:09:24.355Z" itemprop="datePublished">2016-05-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/dialy/">dialy</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/16/2016-02-2016-02-04-common-git-comand-line/">一些常用的git命令</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>一些常用的git命令行</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commin -m <span class="string">"udpate describe"</span></span><br><span class="line">git commit <span class="_">-a</span> -m <span class="string">"update describe"</span></span><br><span class="line"></span><br><span class="line">git status</span><br><span class="line">git push origin master</span><br><span class="line"></span><br><span class="line">git checkout --file                 <span class="comment"># 撤销工作区的更改</span></span><br><span class="line">git reset --head [commit hashcode]  <span class="comment"># 回退到某个提交时的状态</span></span><br><span class="line">git push --force                    <span class="comment"># 强制提交到远程仓库</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://codecly259.github.io/2016/05/16/2016-02-2016-02-04-common-git-comand-line/" data-id="cioa40q1f000ctcxnfa2qtiwx" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-2016-02-2016-02-04-comment-system" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/16/2016-02-2016-02-04-comment-system/" class="article-date">
+  <time datetime="2016-05-16T14:09:24.354Z" itemprop="datePublished">2016-05-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/dialy/">dialy</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/16/2016-02-2016-02-04-comment-system/">社会化评论系统</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>以下是几个评论系统，这里做个记录，有时间去了解下</p>
+<ul>
+<li>Disqus：<a href="http://disqus.com" target="_blank" rel="external">http://disqus.com</a></li>
+<li>友  言：<a href="http://uyan.cc" target="_blank" rel="external">http://uyan.cc</a></li>
+<li>评论啦：<a href="http://pinglun.la" target="_blank" rel="external">http://pinglun.la</a></li>
+<li>贝  米：<a href="http://baye.me" target="_blank" rel="external">http://baye.me</a></li>
+<li>多  说：<a href="http://www.duoshuo.com" target="_blank" rel="external">http://www.duoshuo.com</a></li>
+</ul>
+<p>后续都试试看看怎么用，并找一个合适的用在自己的博客中</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://codecly259.github.io/2016/05/16/2016-02-2016-02-04-comment-system/" data-id="cioa40q1f0009tcxnyuub5tda" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/comment/">comment</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/disqus/">disqus</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/duoshuo/">duoshuo</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-2016-02-2016-02-02-an-experience-to-grep-tomcat-log" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/16/2016-02-2016-02-02-an-experience-to-grep-tomcat-log/" class="article-date">
+  <time datetime="2016-05-16T14:09:24.349Z" itemprop="datePublished">2016-05-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/dialy/">dialy</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/16/2016-02-2016-02-02-an-experience-to-grep-tomcat-log/">记一次查看tomcat日志文件的经历</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="事件的起源"><a href="#事件的起源" class="headerlink" title="事件的起源"></a>事件的起源</h1><p>也就是个查询tocmat中日志的事情。之前的一个定时任务在本地测试没有问题，于是放到生产环境中，过段时间貌似没有产生预期的效果。<br>于是想查看日志看看到底有什么问题。然而，现在问题来了，生产环境中的日志全部打印在默认的文件中，即:<code>{$TOMCAT_HONME}/logs/catalina.out</code><br>此文件已大量堆积到现在臃肿到几G的地步。偷偷的百度了下怎么查看文件大小：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ls -lh catalina.out</span><br><span class="line"></span><br><span class="line">-rw-rw-r-- 1 kanms kanms 5.2G Feb  2 15:45 catalina.out</span><br></pre></td></tr></table></figure>
+<p>对，没有看错，<strong>5.2G</strong>!!!</p>
+<h1 id="事件的经历"><a href="#事件的经历" class="headerlink" title="事件的经历"></a>事件的经历</h1><ul>
+<li>首先找下是否有文件异常时自定义的一些打印日志,其中 -n 表示显示行号。</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[kanms@kanms-web logs]$ grep -n <span class="string">"带附件和图片的邮件发送失败！！！"</span> catalina.out</span><br><span class="line">65393183:[kanms-eleManage]  『带附件和图片的邮件发送失败！！！』  (线程名：pool-8-thread-1) cn.com.starit.kanms.util.mail.SendMailUtil(SendMailUtil.java:81) 2016-02-02 00:00:02,616</span><br><span class="line">65393215:[kanms-eleManage]  『带附件和图片的邮件发送失败！！！』  (线程名：pool-7-thread-1) cn.com.starit.kanms.util.mail.SendMailUtil(SendMailUtil.java:81) 2016-02-02 00:00:02,616</span><br></pre></td></tr></table></figure>
+<ul>
+<li>根据显示的信息及时间然后定位需要查看的日志内容，如查看上面第一次出现后的200行日志</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">[kanms@kanms-web logs]$ sed -n <span class="string">"65393183,65393383p"</span> catalina.out</span><br><span class="line">[kanms-eleManage]  『带附件和图片的邮件发送失败！！！』  (线程名：pool-8-thread-1) cn.com.starit.kanms.util.mail.SendMailUtil(SendMailUtil.java:81) 2016-02-02 00:00:02,616</span><br><span class="line">org.springframework.mail.MailSendException: Mail server connection failed; nested exception is javax.mail.MessagingException: Unknown SMTP host: mail.ustcinfo.com;</span><br><span class="line">  nested exception is:</span><br><span class="line">	java.net.UnknownHostException: mail.ustcinfo.com. Failed messages: javax.mail.MessagingException: Unknown SMTP host: mail.ustcinfo.com;</span><br><span class="line">  nested exception is:</span><br><span class="line">	java.net.UnknownHostException: mail.ustcinfo.com; message exception details (1) are:</span><br><span class="line">Failed message 1:</span><br><span class="line">javax.mail.MessagingException: Unknown SMTP host: mail.ustcinfo.com;</span><br><span class="line">  nested exception is:</span><br><span class="line">	java.net.UnknownHostException: mail.ustcinfo.com</span><br><span class="line">	at com.sun.mail.smtp.SMTPTransport.openServer(SMTPTransport.java:1280)</span><br><span class="line">	at com.sun.mail.smtp.SMTPTransport.protocolConnect(SMTPTransport.java:370)</span><br><span class="line">	at javax.mail.Service.connect(Service.java:275)</span><br><span class="line">	at org.springframework.mail.javamail.JavaMailSenderImpl.doSend(JavaMailSenderImpl.java:389)</span><br><span class="line">	at org.springframework.mail.javamail.JavaMailSenderImpl.send(JavaMailSenderImpl.java:340)</span><br><span class="line">	at org.springframework.mail.javamail.JavaMailSenderImpl.send(JavaMailSenderImpl.java:336)</span><br><span class="line">	at cn.com.starit.kanms.util.mail.SendMailUtil.sendFileMail(SendMailUtil.java:78)</span><br><span class="line">	at cn.com.starit.kanms.task.TaskJob.sendMailJob(TaskJob.java:27)</span><br><span class="line">	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)</span><br><span class="line">	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)</span><br><span class="line">	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)</span><br><span class="line">	at java.lang.reflect.Method.invoke(Method.java:606)</span><br><span class="line">	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:64)</span><br><span class="line">	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:53)</span><br><span class="line">	at org.springframework.scheduling.concurrent.ReschedulingRunnable.run(ReschedulingRunnable.java:81)</span><br><span class="line">	at java.util.concurrent.Executors<span class="variable">$RunnableAdapter</span>.call(Executors.java:471)</span><br><span class="line">	at java.util.concurrent.FutureTask.run(FutureTask.java:262)</span><br><span class="line">	at java.util.concurrent.ScheduledThreadPoolExecutor<span class="variable">$ScheduledFutureTask</span>.access<span class="variable">$201</span>(ScheduledThreadPoolExecutor.java:178)</span><br><span class="line">	at java.util.concurrent.ScheduledThreadPoolExecutor<span class="variable">$ScheduledFutureTask</span>.run(ScheduledThreadPoolExecutor.java:292)</span><br><span class="line">	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)</span><br><span class="line">	at java.util.concurrent.ThreadPoolExecutor<span class="variable">$Worker</span>.run(ThreadPoolExecutor.java:615)</span><br><span class="line">	at java.lang.Thread.run(Thread.java:745)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>通过日志发现原来是发送邮件服务器主机mail.ustcinfo.com不通的问题，但是本地使用同样的主机配置又试了一下可以发送</li>
+<li>于是在服务器上ping服务器主机不通。</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[kanms@kanms-web logs]$ ping mail.ustcinfo.com</span><br><span class="line">ping: unknown host mail.ustcinfo.com</span><br></pre></td></tr></table></figure>
+<ul>
+<li>网上查阅之后才知道原来linux服务器上发送接收服务器需要安装sendmail包</li>
+<li>安装后依然无效，可能是配置不正确，目前是把邮箱服务器由域名改成IP</li>
+</ul>
+<h1 id="事件后的思考"><a href="#事件后的思考" class="headerlink" title="事件后的思考"></a>事件后的思考</h1><p>这里不把重点放在sendmail的安装与配置说明上，主要是提出日志的大小和分类上。<br>目前的这种打印日志方式存在很多弊端，可以考虑按照以下方式进行修改：</p>
+<ul>
+<li>按时间分类出文件。比如说一天一个文件，这个使用log4j等日志框架的配置文件即可实现</li>
+<li>按照日志的级别进行分类出文件。比如ERROR以上的放在一个文件中；INFO级别的放一个文件；异常的放一个文件，这可以在输出的时候需要做处理</li>
+<li>按日志内容进行分类。比如登录日志放在一个文件，操作某个重保的表格放一个文件等；这些需要在打印日志的时候注意分类，或者自定义一些常用的打印日志级别</li>
+</ul>
+<p>以上的只是一些设想，具体以能够把日志明确分开和方便定位日志信息为准则，可以交叉使用上面的规则。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://codecly259.github.io/2016/05/16/2016-02-2016-02-02-an-experience-to-grep-tomcat-log/" data-id="cioa40q0z0000tcxni6qzvhs6" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/catalina-out/">catalina.out</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/log/">log</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tomcat/">tomcat</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-2016-01-2016-01-15-add-crud-module-to-play-framework-app" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/16/2016-01-2016-01-15-add-crud-module-to-play-framework-app/" class="article-date">
+  <time datetime="2016-05-16T14:09:24.315Z" itemprop="datePublished">2016-05-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/dialy/">dialy</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/16/2016-01-2016-01-15-add-crud-module-to-play-framework-app/">play框架添加crud模块</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h2><blockquote>
+<p>在play中添加模块</p>
+</blockquote>
+<h2 id="测试环境"><a href="#测试环境" class="headerlink" title="测试环境"></a>测试环境</h2><ul>
+<li>play framework 1.4.1</li>
+<li>jdk 1.8.0_66</li>
+<li>Eclipse Luna (4.4)</li>
+</ul>
+<h2 id="添加模块的步骤"><a href="#添加模块的步骤" class="headerlink" title="添加模块的步骤"></a>添加模块的步骤</h2><p>在一个已有的应用里面添加模块，这里以添加crud为例：</p>
+<p>1.在依赖配置文件中添加crud的依赖<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;app&#125;/conf/dependencies.yml</span><br><span class="line">===========================</span><br><span class="line"><span class="attr">require:</span></span><br><span class="line"><span class="bullet">    -</span> play <span class="number">1.4</span><span class="number">.1</span></span><br><span class="line"><span class="bullet">    -</span> play -&gt; crud</span><br></pre></td></tr></table></figure></p>
+<p>2.在控制台输入以下命令添加依赖的jar包或文件<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">在应用目录下</span><br><span class="line">============</span><br><span class="line">play dependencies</span><br></pre></td></tr></table></figure></p>
+<p>3.重新生成IDE的配置文件，这里是eclipse<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">在应用目录下,根据IDE选择其中一个命令</span><br><span class="line">================================</span><br><span class="line">play eclipsify</span><br><span class="line">play netbeansify</span><br><span class="line">play play idealize</span><br></pre></td></tr></table></figure></p>
+<p>4.IDE中(eclipse)刷新项目，crud的相关包和配置文件已加入项目<br><img src="../images/01-15-01-crud-imported.png" alt="01-15-01-crud-imported.png"></p>
+<p>5.在应用中添加crud模块的route路由<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;app&#125;/config/routes</span><br><span class="line">===================</span><br><span class="line"># Import CRUD routes</span><br><span class="line">*     	/admin           						module:crud</span><br></pre></td></tr></table></figure></p>
+<h2 id="更多阅读"><a href="#更多阅读" class="headerlink" title="更多阅读"></a>更多阅读</h2><ol>
+<li><a href="http://www.oschina.net/translate/play-framework-modules-divide-and-conquer?cmp&amp;p=1" target="_blank" rel="external">Play 框架模块：Divide 和 conquer</a></li>
+<li><a href="https://www.playframework.com/documentation/1.4.x/guide7" target="_blank" rel="external">Setting up a basic administration area using CRUD</a></li>
+<li><a href="http://play-framework.herokuapp.com/zh/ide#h3-2" target="_blank" rel="external">配置你喜欢的 IDE</a></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://codecly259.github.io/2016/05/16/2016-01-2016-01-15-add-crud-module-to-play-framework-app/" data-id="cioa3zqzn000bv4xn3ek2bkkn" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/play/">play</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-2016-01-2016-01-11-chmod-tomcat-port" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/16/2016-01-2016-01-11-chmod-tomcat-port/" class="article-date">
+  <time datetime="2016-05-16T14:09:24.313Z" itemprop="datePublished">2016-05-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/dialy/">dialy</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/16/2016-01-2016-01-11-chmod-tomcat-port/">修改tomcat端口</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h2><blockquote>
+<p>当一个机器中安装多个tomcat并需要同时启动时，会出现端口被占用而无法同时启动的问题</p>
+</blockquote>
+<h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><blockquote>
+<p>如果都是用的默认的端口，当启动一个tomcat时，就已经占用了默认端口，再启动其他tomcat就无法使用已经被占用的端口。</p>
+</blockquote>
+<h2 id="解决方法-修改tomcat端口"><a href="#解决方法-修改tomcat端口" class="headerlink" title="解决方法:修改tomcat端口"></a>解决方法:修改tomcat端口</h2><p>本例使用tomcat6.0，其他版本类似。主要需要修改3个端口：</p>
+<p>1.修改监听HTTP1.1请求的端口<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Connector</span> <span class="attr">port</span>=<span class="string">"8080"</span> <span class="attr">protocol</span>=<span class="string">"HTTP/1.1"</span> </span><br><span class="line">               <span class="attr">connectionTimeout</span>=<span class="string">"20000"</span> </span><br><span class="line">               <span class="attr">redirectPort</span>=<span class="string">"8443"</span> </span><br><span class="line">			   <span class="attr">URIEncoding</span>=<span class="string">"UTF-8"</span>/&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>修改其中的<code>port=&quot;8080&quot;</code>为其他端口，如：<code>port=&quot;8081&quot;</code></p>
+<p>2.修改监听AJP请求的端口，该端口接收由其他服务器转发过来的请求<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Connector</span> <span class="attr">port</span>=<span class="string">"8009"</span> <span class="attr">protocol</span>=<span class="string">"AJP/1.3"</span> <span class="attr">redirectPort</span>=<span class="string">"8443"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>修改其中的<code>port=&quot;8009&quot;</code>为其他端口，如：<code>port=&quot;8010&quot;</code></p>
+<p>3.修改监听tomcat关闭请求的端口<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Server</span> <span class="attr">port</span>=<span class="string">"8005"</span> <span class="attr">shutdown</span>=<span class="string">"SHUTDOWN"</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>修改其中的<code>port=&quot;8005&quot;</code>为其他端口，如：<code>port=&quot;8006&quot;</code></p>
+<p>确定修改后的端口没有其他地方使用的，修改以上端口后重启启动tomcat即可</p>
+<h2 id="tomcat-server结构图"><a href="#tomcat-server结构图" class="headerlink" title="tomcat server结构图"></a>tomcat server结构图</h2><p><img src="../images/01-11-01-tomcat-startup.gif" alt="tocmcat-srartup"></p>
+<h2 id="更多阅读"><a href="#更多阅读" class="headerlink" title="更多阅读"></a>更多阅读</h2><ol>
+<li><a href="http://www.cnblogs.com/gugnv/archive/2012/02/01/2334187.html" target="_blank" rel="external">Tomcat Server.xml详解</a></li>
+<li><a href="http://blog.csdn.net/alongwilliam/article/details/8199974" target="_blank" rel="external">当装了两个tomcat后，如何修改tomcat端口</a></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://codecly259.github.io/2016/05/16/2016-01-2016-01-11-chmod-tomcat-port/" data-id="cioa3zqzn000dv4xnxnm2g0jo" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tomcat/">tomcat</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-2016-01-2016-01-07-corn-cross-domain-request" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/16/2016-01-2016-01-07-corn-cross-domain-request/" class="article-date">
+  <time datetime="2016-05-16T14:09:24.312Z" itemprop="datePublished">2016-05-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/dialy/">dialy</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/16/2016-01-2016-01-07-corn-cross-domain-request/">java web项目使用CORS方法实现跨域请求方案</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="问题产生背景"><a href="#问题产生背景" class="headerlink" title="问题产生背景"></a>问题产生背景</h2><p>需要实现这样一个需求，在当前站点中使用ajax发送一个请求到另一个站点获取数据。js中使用jquery的ajax如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$.ajax(&#123;</span><br><span class="line">     url:http:<span class="comment">//219.151.48.39:8085/kanms_appServer/operationer/login,</span></span><br><span class="line">     data:&#123;</span><br><span class="line">     	<span class="string">"username"</span>: <span class="string">"test"</span>,</span><br><span class="line">		<span class="string">"password"</span>: <span class="string">"test"</span> </span><br><span class="line">     &#125;,</span><br><span class="line">     type:<span class="string">'post'</span>,</span><br><span class="line">     dataType:<span class="string">'json'</span>,</span><br><span class="line">     success:<span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">     	<span class="built_in">console</span>.info(data);          	 </span><br><span class="line">     &#125;);</span><br></pre></td></tr></table></figure>
+<p>结果在页面上出现以下错误提示：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">XMLHttpRequest cannot load http:<span class="comment">//219.151.48.39:8085/kanms_appServer/operationer/login. </span></span><br><span class="line">No <span class="string">'Access-Control-Allow-Origin'</span> header is present on the requested resource. </span><br><span class="line">Origin <span class="string">'null'</span> is therefore not allowed access.</span><br></pre></td></tr></table></figure>
+<h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><p>网上查询得知原来是因为跨域的问题，javascript出于安全方面的考虑，不允许跨域调用其他页面的对象。</p>
+<blockquote>
+<p>什么是跨域？<br>简单的理解就是因为javascript同源策略的限制，a.com域名下的js无法操作b.com或者c.a.com域名下的对象。更详细的说明可以看下表：</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>URL</th>
+<th>说明</th>
+<th>是否允许通信</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://www.a.com/a.js" target="_blank" rel="external">http://www.a.com/a.js</a> <br> <a href="http://www.a.com/b.js" target="_blank" rel="external">http://www.a.com/b.js</a></td>
+<td>同一域名下</td>
+<td>允许</td>
+</tr>
+<tr>
+<td><a href="http://www.a.com/lab/a.js" target="_blank" rel="external">http://www.a.com/lab/a.js</a> <br> <a href="http://www.a.com/script/b.js" target="_blank" rel="external">http://www.a.com/script/b.js</a></td>
+<td>同一域名下不同文件夹</td>
+<td>允许</td>
+</tr>
+<tr>
+<td><a href="http://www.a.com:8000/a.js" target="_blank" rel="external">http://www.a.com:8000/a.js</a> <br> <a href="http://www.a.com/b.js" target="_blank" rel="external">http://www.a.com/b.js</a></td>
+<td>同一域名不同端口</td>
+<td>不允许</td>
+</tr>
+<tr>
+<td><a href="http://www.a.com/a.js" target="_blank" rel="external">http://www.a.com/a.js</a> <br> <a href="https://www.a.com/b.js" target="_blank" rel="external">https://www.a.com/b.js</a></td>
+<td>同一域名不同协议</td>
+<td>不允许</td>
+</tr>
+<tr>
+<td><a href="http://www.a.com/a.js" target="_blank" rel="external">http://www.a.com/a.js</a> <br> <a href="http://70.32.92.74/b.js" target="_blank" rel="external">http://70.32.92.74/b.js</a></td>
+<td>域名和域名对应ip</td>
+<td>不允许</td>
+</tr>
+<tr>
+<td><a href="http://www.a.com/a.js" target="_blank" rel="external">http://www.a.com/a.js</a> <br> <a href="http://script.a.com/b.js" target="_blank" rel="external">http://script.a.com/b.js</a></td>
+<td>主域相同，子域不同</td>
+<td>不允许</td>
+</tr>
+<tr>
+<td><a href="http://www.a.com/a.js" target="_blank" rel="external">http://www.a.com/a.js</a> <br> <a href="http://a.com/b.js" target="_blank" rel="external">http://a.com/b.js</a></td>
+<td>同一域名，不同二级域名（同上）</td>
+<td>不允许（cookie这种情况下也允许访问）</td>
+</tr>
+<tr>
+<td><a href="http://www.cnblogs.com/a.js" target="_blank" rel="external">http://www.cnblogs.com/a.js</a> <br> <a href="http://www.a.com/b.js" target="_blank" rel="external">http://www.a.com/b.js</a></td>
+<td>不同域名</td>
+<td>不允许</td>
+</tr>
+</tbody>
+</table>
+<p>经分析得知js中<code>XMLHttpRequest</code>对象不能加载跨域上的资源</p>
+<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p>那么，怎样才能解决跨域访问资源的问题呢，主要有<code>JSONP</code>、<code>flash</code>、<code>iframe</code>、<code>xhr2</code>。这里介绍使用<code>CORS</code>（跨域资源共享，Cross-Origin Resource Sharing）的方法。</p>
+<blockquote>
+<p>CORS原理：<br>CORS定义一种跨域访问的机制，可以让AJAX实现跨域访问。CORS 允许一个域上的网络应用向另一个域提交跨域 AJAX 请求。实现此功能非常简单，只需由服务器发送一个响应标头即可。</p>
+</blockquote>
+<p>做法为：设置HTTP响应头<code>Access-Control-Allow-Origin</code>，指定服务器端允许进行跨域资源访问的来源域。可以用通配符*表示允许任何域的JavaScript访问资源，但是在响应一个携带身份信息(Credential)的HTTP请求时，<code>Access-Control-Allow-Origin</code>必需指定具体的域，不能用通配符。 </p>
+<p>这里使用Filter的方式给服务端的所有请求都加上<code>Access-Control-Allow-Origin</code>响应头，代码如下：<br>SimpleCORSFilter类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ustcinfo.kanms.support;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.Filter;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.FilterChain;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.FilterConfig;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletResponse;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimpleCORSFilter</span> <span class="keyword">implements</span> <span class="title">Filter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(FilterConfig filterConfig)</span> <span class="keyword">throws</span> ServletException </span>&#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(ServletRequest request, ServletResponse response, FilterChain chain)</span></span><br><span class="line">			<span class="keyword">throws</span> IOException, ServletException </span>&#123;</span><br><span class="line">		HttpServletResponse res = (HttpServletResponse)response;</span><br><span class="line">		res.setHeader(<span class="string">"Access-Control-Allow-Origin"</span>, <span class="string">"*"</span>);</span><br><span class="line">		res.setHeader(<span class="string">"Access-Control-Allow-Methods"</span>, <span class="string">"POST, GET, OPTIONS, DELETE"</span>);</span><br><span class="line">		res.setHeader(<span class="string">"Access-Control-Max-Age"</span>, <span class="string">"3600"</span>);</span><br><span class="line">		res.setHeader(<span class="string">"Access-Control-Allow-Headers"</span>, <span class="string">"x-requested-with"</span>);</span><br><span class="line">		chain.doFilter(request, response);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>web.xml中添加过滤器的配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- cors解决跨域访问问题 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>cors<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>com.ustcinfo.kanms.support.SimpleCORSFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>cors<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>加上以上代码后，使用原来的ajax访问跨域服务端信息的<code>Response Header</code>如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Access-Control-Allow-Headers:x-requested-<span class="keyword">with</span></span><br><span class="line">Access-Control-Allow-Methods:POST, GET, OPTIONS, DELETE</span><br><span class="line">Access-Control-Allow-Origin:*</span><br><span class="line">Access-Control-Max-Age:<span class="number">3600</span></span><br><span class="line">Content-Type:application/json;charset=UTF<span class="number">-8</span></span><br><span class="line">Server:Jetty(<span class="number">8.1</span><span class="number">.10</span>.v20130312)</span><br><span class="line">Transfer-Encoding:chunked</span><br></pre></td></tr></table></figure>
+<p>并且可以通过ajax访问跨域服务器的资源了，大功告成。</p>
+<h2 id="更多阅读"><a href="#更多阅读" class="headerlink" title="更多阅读"></a>更多阅读</h2><ol>
+<li><a href="https://zh.wikipedia.org/wiki/%E8%B7%A8%E4%BE%86%E6%BA%90%E8%B3%87%E6%BA%90%E5%85%B1%E4%BA%AB" target="_blank" rel="external">CORS维基百科</a></li>
+<li><a href="http://www.web-fish.com/program/php/794.html" target="_blank" rel="external">启用CORS实现Ajax跨域请求</a></li>
+<li><a href="http://www.cnblogs.com/rainman/archive/2011/02/20/1959325.html" target="_blank" rel="external">JavaScript跨域总结与解决办法</a></li>
+<li><a href="http://www.tuicool.com/articles/umymmqY" target="_blank" rel="external">SpringMvc+AngularJS通过CORS实现跨域方案</a></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://codecly259.github.io/2016/05/16/2016-01-2016-01-07-corn-cross-domain-request/" data-id="cioa3zqzn000gv4xn725pfxi1" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ajax/">ajax</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cors/">cors</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-2016-01-2016-01-06-spring-task" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/16/2016-01-2016-01-06-spring-task/" class="article-date">
+  <time datetime="2016-05-16T14:09:24.310Z" itemprop="datePublished">2016-05-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/dialy/">dialy</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/16/2016-01-2016-01-06-spring-task/">spring task定时器的运用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>Spring3.0以后自主开发的定时任务工具spring task ,可以将它看成是一个轻量级的Quartz，而且使用起来很简单，除spring相关的包外不需要额外的包，而且支持注解和配置文件两种。</p>
+</blockquote>
+<h2 id="第一种：配置文件"><a href="#第一种：配置文件" class="headerlink" title="第一种：配置文件"></a>第一种：配置文件</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://codecly259.github.io/2016/05/16/2016-01-2016-01-06-spring-task/" data-id="cioa3zqzn000av4xn1g0leiup" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sprnig/">sprnig</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/task/">task</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">__('next') &raquo;</a>
+  </nav>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorier</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/dialy/">dialy</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/movie/">movie</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/technology/">technology</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ajax/">ajax</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/boot/">boot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/catalina-out/">catalina.out</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/comment/">comment</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cors/">cors</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/disqus/">disqus</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/duoshuo/">duoshuo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jekyll-bootstrap/">jekyll bootstrap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/log/">log</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mail/">mail</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oracle/">oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/play/">play</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sprnig/">sprnig</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/task/">task</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/windows/">windows</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/唐人街探案/">唐人街探案</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/影评/">影评</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/boot/" style="font-size: 10px;">boot</a> <a href="/tags/catalina-out/" style="font-size: 10px;">catalina.out</a> <a href="/tags/comment/" style="font-size: 10px;">comment</a> <a href="/tags/cors/" style="font-size: 10px;">cors</a> <a href="/tags/disqus/" style="font-size: 10px;">disqus</a> <a href="/tags/duoshuo/" style="font-size: 10px;">duoshuo</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/jekyll-bootstrap/" style="font-size: 10px;">jekyll bootstrap</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/log/" style="font-size: 10px;">log</a> <a href="/tags/mail/" style="font-size: 10px;">mail</a> <a href="/tags/oracle/" style="font-size: 10px;">oracle</a> <a href="/tags/play/" style="font-size: 10px;">play</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/sprnig/" style="font-size: 10px;">sprnig</a> <a href="/tags/task/" style="font-size: 10px;">task</a> <a href="/tags/tomcat/" style="font-size: 15px;">tomcat</a> <a href="/tags/windows/" style="font-size: 10px;">windows</a> <a href="/tags/唐人街探案/" style="font-size: 10px;">唐人街探案</a> <a href="/tags/影评/" style="font-size: 10px;">影评</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Arkiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Siste innlegg</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/05/16/2016-03-2016-03-01-using-redis-in-windows/">在windows操作系统中使用redis</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/16/2016-02-2016-02-21-detective-chinatown-short-conetnt/">唐人街探案中的一些对白</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/16/2016-02-2016-02-20-use-jekyll-bootstrap/">快速使用jekyll bootstrap主题</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/16/2016-02-2016-02-04-common-git-comand-line/">一些常用的git命令</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/16/2016-02-2016-02-04-comment-system/">社会化评论系统</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 codecly<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

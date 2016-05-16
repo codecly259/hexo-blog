@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://codecly259.github.io/page/2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Søk"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://codecly259.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-2016-01-2016-01-06-java-sql-date-format" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/16/2016-01-2016-01-06-java-sql-date-format/" class="article-date">
+  <time datetime="2016-05-16T14:09:24.309Z" itemprop="datePublished">2016-05-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://codecly259.github.io/2016/05/16/2016-01-2016-01-06-java-sql-date-format/" data-id="cioa3zqz70000v4xn69pkl0hs" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-2016-01-2016-01-05-spring-send-mail" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/16/2016-01-2016-01-05-spring-send-mail/" class="article-date">
+  <time datetime="2016-05-16T14:09:24.307Z" itemprop="datePublished">2016-05-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/dialy/">dialy</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/16/2016-01-2016-01-05-spring-send-mail/">使用spring发送邮件</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本文主要介绍使用Spring3.x框架中的JavaMail支持来实现邮件发送功能，并添加附件。</p>
+<p>1.需要用到的jar包：mail-1.4.jar,spring<br>如果使用maven,pom.xml中添加依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;properties&gt;</span><br><span class="line">	&lt;!-- 依赖公共包版本定义--&gt;</span><br><span class="line">	&lt;log4j.version&gt;1.2.14&lt;/log4j.version&gt;</span><br><span class="line">	&lt;spring.version&gt;3.1.0.RELEASE&lt;/spring.version&gt;</span><br><span class="line">&lt;/properties&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;javax.mail&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;mail&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;1.4&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;spring-core&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;$&#123;spring.version&#125;&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;spring-beans&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;$&#123;spring.version&#125;&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;spring-context&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;$&#123;spring.version&#125;&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<p>2.spring-mail配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">	xmlns:context=&quot;http://www.springframework.org/schema/context&quot;</span><br><span class="line">	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot;</span><br><span class="line">	xmlns:task=&quot;http://www.springframework.org/schema/task&quot;</span><br><span class="line">	xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd  </span><br><span class="line">	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd</span><br><span class="line">	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd</span><br><span class="line">	http://www.springframework.org/schema/context</span><br><span class="line">    http://www.springframework.org/schema/context/spring-context-2.5.xsd&quot;</span><br><span class="line">	&gt;</span><br><span class="line">	&lt;!-- 注意:这里的参数(如用户名、密码)都是针对邮件发送者的 --&gt;</span><br><span class="line">	&lt;bean id=&quot;mailSender&quot; class=&quot;org.springframework.mail.javamail.JavaMailSenderImpl&quot;&gt;</span><br><span class="line">		&lt;!-- SMTP发送邮件的服务器的IP和端口 --&gt;</span><br><span class="line">		&lt;property name=&quot;host&quot; value=&quot;$&#123;mail.host&#125;&quot; /&gt;</span><br><span class="line">		&lt;property name=&quot;port&quot; value=&quot;$&#123;mail.port&#125;&quot; /&gt;</span><br><span class="line"></span><br><span class="line">		&lt;!-- 登陆SMTP邮件发送服务器的用户名和密码 --&gt;</span><br><span class="line">		&lt;property name=&quot;username&quot; value=&quot;$&#123;mail.username&#125;&quot; /&gt;</span><br><span class="line">		&lt;property name=&quot;password&quot; value=&quot;$&#123;mail.password&#125;&quot; /&gt;</span><br><span class="line"></span><br><span class="line">		&lt;!-- 获得邮件会话属性,验证登录邮件服务器是否成功 --&gt;</span><br><span class="line">		&lt;property name=&quot;javaMailProperties&quot;&gt;</span><br><span class="line">			&lt;props&gt;</span><br><span class="line">				&lt;prop key=&quot;mail.smtp.auth&quot;&gt;true&lt;/prop&gt;</span><br><span class="line">				&lt;prop key=&quot;prop&quot;&gt;true&lt;/prop&gt;</span><br><span class="line">				&lt;prop key=&quot;mail.smtp.timeout&quot;&gt;25000&lt;/prop&gt;</span><br><span class="line">			&lt;/props&gt;</span><br><span class="line">		&lt;/property&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">	&lt;!-- 定时任务：每月2号发送邮件 corn:秒 分钟 小时 天(月) 月 天(星期) 年份 --&gt;</span><br><span class="line">	&lt;task:scheduled-tasks&gt;</span><br><span class="line">		&lt;task:scheduled ref=&quot;taskJob&quot; method=&quot;sendMailJob&quot; cron=&quot;0 0 0 2 * ? *&quot; /&gt; &lt;!-- 每月2号的凌晨 --&gt;</span><br><span class="line">	&lt;/task:scheduled-tasks&gt;</span><br><span class="line"></span><br><span class="line">	&lt;context:component-scan base-package=&quot;cn.com.starit.kanms.task&quot; /&gt;</span><br><span class="line"></span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+<p>properties 文件配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 发送邮件配置</span><br><span class="line">mail.host=smtp.163.com</span><br><span class="line">mail.port=25</span><br><span class="line">mail.username=maxinchun0215@163.com</span><br><span class="line">mail.password=********</span><br><span class="line"># 接收邮件的邮箱，多个用&apos;,&apos;分割</span><br><span class="line"># 发送给</span><br><span class="line">mail.to=maxinchun0215@qq.com,ma.xinchun@ustcinfo.com</span><br><span class="line"># 抄送给</span><br><span class="line">mail.copy=ha.chuanchi@ustcinfo.com,zhong.jinkai@ustcinfo.com</span><br></pre></td></tr></table></figure>
+<p>3.java类分别为<br>SendMailUtil类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.com.starit.kanms.util.mail;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.mail.internet.MimeMessage;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.log4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.springframework.mail.javamail.JavaMailSender;</span><br><span class="line"><span class="keyword">import</span> org.springframework.mail.javamail.MimeMessageHelper;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> cn.com.starit.commons.service.ApplicationContextProvider;</span><br><span class="line"><span class="keyword">import</span> cn.com.starit.commons.web.util.ExportUtil;</span><br><span class="line"><span class="keyword">import</span> cn.com.starit.kanms.dao.GridDao;</span><br><span class="line"><span class="keyword">import</span> cn.com.starit.kanms.service.DataSerive;</span><br><span class="line"><span class="keyword">import</span> cn.com.starit.kanms.util.CustomizedPropertyPlaceholderConfigurer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.sun.xml.internal.messaging.saaj.packaging.mime.internet.MimeUtility;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * 发送邮件工具</span><br><span class="line"> * </span><br><span class="line"> * <span class="doctag">@author</span> maxinchun</span><br><span class="line"> *</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SendMailUtil</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> Logger logger = Logger.getLogger(SendMailUtil.class);</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> JavaMailSender sender;</span><br><span class="line">	<span class="comment">// 获取JavaMailSender bean</span></span><br><span class="line">	<span class="keyword">static</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> (sender == <span class="keyword">null</span>) &#123;</span><br><span class="line">			sender = (JavaMailSender) ApplicationContextProvider.getBean(<span class="string">"mailSender"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * 以附件形式发送email</span><br><span class="line">	 * <span class="doctag">@param</span> sendTo 收件人email地址</span><br><span class="line">	 * <span class="doctag">@param</span> copyTo 抄送对象的email地址</span><br><span class="line">	 * <span class="doctag">@param</span> mailSubject 邮件主题</span><br><span class="line">	 * <span class="doctag">@param</span> mailBody 内容</span><br><span class="line">	 * <span class="doctag">@param</span> files 附件</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sendFileMail</span><span class="params">(String[] sendTo,String[] copyTo, String mailSubject, String mailBody, File[] files)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">		MimeMessage mimeMessage = sender.createMimeMessage();</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="keyword">if</span>(logger.isDebugEnabled())&#123;</span><br><span class="line">				logger.debug(<span class="string">"带附件和图片的邮件正在发送..."</span>);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="comment">// 设置utf-8或GBK编码，否则邮件会有乱码</span></span><br><span class="line">			MimeMessageHelper helper = <span class="keyword">new</span> MimeMessageHelper(mimeMessage,<span class="keyword">true</span>,<span class="string">"UTF-8"</span>);</span><br><span class="line">			<span class="comment">// 设置发送人名片</span></span><br><span class="line">			String from = (String)CustomizedPropertyPlaceholderConfigurer.getContextProperty(<span class="string">"mail.username"</span>);</span><br><span class="line">			helper.setFrom(from);</span><br><span class="line">			<span class="comment">// 设置收件人邮箱</span></span><br><span class="line">			helper.setTo(sendTo);</span><br><span class="line">			<span class="keyword">if</span>(copyTo.length != <span class="number">0</span> &amp;&amp; !copyTo[<span class="number">0</span>].equals(<span class="string">""</span>))&#123;</span><br><span class="line">				helper.setCc(copyTo);</span><br><span class="line">			&#125;</span><br><span class="line">			</span><br><span class="line">			<span class="comment">// 主题</span></span><br><span class="line">			helper.setSubject(mailSubject);</span><br><span class="line">			<span class="comment">// 邮件内容，注意加参数true，表示启用html格式</span></span><br><span class="line">			helper.setText(mailBody,<span class="keyword">true</span>);</span><br><span class="line">			</span><br><span class="line">			<span class="keyword">if</span> (files != <span class="keyword">null</span> &amp;&amp; files.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; files.length; i++)</span><br><span class="line">                    <span class="comment">// 加入附件</span></span><br><span class="line">                    helper.addAttachment(MimeUtility.encodeText(files[i]</span><br><span class="line">                            .getName()), files[i]);</span><br><span class="line">            &#125;</span><br><span class="line">			 <span class="comment">// 加入插图(图片附件)</span></span><br><span class="line"><span class="comment">//           helper.addInline(MimeUtility.encodeText("pic01"), new File("E:\\test\\slide-5.png"));</span></span><br><span class="line">			</span><br><span class="line">            sender.send(mimeMessage);</span><br><span class="line">            logger.info(<span class="string">"带附件和图片的邮件发送成功！"</span>);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			logger.info(<span class="string">"带附件和图片的邮件发送失败！！！"</span>);</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">createExecl</span><span class="params">(Long id)</span> </span>&#123;</span><br><span class="line">		GridDao gridDao = DataSerive.getGridDao();</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			Map&lt;String,Object&gt; map = gridDao.getGridInfoByGridId(id);</span><br><span class="line">			<span class="keyword">if</span>(map !=<span class="keyword">null</span>)&#123;</span><br><span class="line">				String fileName = map.get(<span class="string">"TITLE"</span>).toString();</span><br><span class="line">				String columns = map.get(<span class="string">"COLMN"</span>).toString();</span><br><span class="line">				String sql = map.get(<span class="string">"SQL"</span>).toString();</span><br><span class="line">				List dataList = gridDao.getDataInfo(sql);</span><br><span class="line">				String path = ExportUtil.createExcel(dataList, columns, fileName);</span><br><span class="line">				<span class="keyword">return</span> path;</span><br><span class="line">			&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">				logger.info(<span class="string">"没有需要的导出数据,请查看girdId:【"</span>+id+<span class="string">"】是否正确"</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			logger.info(<span class="string">"生成excel失败！！！！"</span>);</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		</span><br><span class="line">		File noPay = <span class="keyword">new</span> File(SendMailUtil.createExecl(<span class="number">143L</span>));</span><br><span class="line">		File toPay = <span class="keyword">new</span> File(SendMailUtil.createExecl(<span class="number">142L</span>));</span><br><span class="line">		</span><br><span class="line"><span class="comment">//		File noPay = new File("E:\\test\\无交费记录接入点_20160105040144.xls");</span></span><br><span class="line"><span class="comment">//		File toPay = new File("E:\\test\\需要交费接入点_20160105050105.xls");</span></span><br><span class="line"><span class="comment">//		String to = "maxinchun0215@qq.com"; //ma.xinchun@ustcinfo.com</span></span><br><span class="line">		String subject = <span class="string">"需要交费的接入点信息"</span>;</span><br><span class="line">		String[] sendTo = CustomizedPropertyPlaceholderConfigurer.getContextProperty(<span class="string">"mail.to"</span>).toString().split(<span class="string">","</span>);</span><br><span class="line">		String[] copyTo = CustomizedPropertyPlaceholderConfigurer.getContextProperty(<span class="string">"mail.copy"</span>).toString().split(<span class="string">","</span>);</span><br><span class="line">		String body = <span class="string">"&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;h1&gt;您好：&lt;/h1&gt;&amp;nbsp;&amp;nbsp;附件为本月需要交费的接入点信息。其中，附件1为系统中暂时还&lt;span style='color:red'&gt;没有交费记录&lt;/span&gt;的接入点信息；附件2为已超时但还&lt;span style='color:red'&gt;未交费&lt;/span&gt;的接入点信息&lt;br&gt;提示：本邮件为系统每月自动发送&lt;/body&gt;&lt;/html&gt;"</span>;</span><br><span class="line"><span class="comment">//		String body = "您好,附件为需要交费的接入点信息。其中，附件1为系统中暂时还没有交费记录的接入点信息；附件2为已超时但还未交费的接入点信息。请查收（提示：本邮件为每月自动发送）";</span></span><br><span class="line">		File[] files = <span class="keyword">new</span> File[]&#123;noPay,toPay&#125;;</span><br><span class="line"> 		SendMailUtil.sendFileMail(sendTo, copyTo, subject, body, files);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>ApplicationContextProvider类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line">package cn.com.starit.commons.service;</span><br><span class="line"></span><br><span class="line">import org.springframework.context.ApplicationContext;</span><br><span class="line">import org.springframework.context.support.ClassPathXmlApplicationContext;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">public class ApplicationContextProvider &#123;</span><br><span class="line">	</span><br><span class="line">	private static ApplicationContext context = null;</span><br><span class="line">	</span><br><span class="line">	/**</span><br><span class="line">	 * </span><br><span class="line">	 * @methodName 得到spring访问类</span><br><span class="line">	 * @return </span><br><span class="line">	 * @author ymiao</span><br><span class="line">	 * @DateTime Aug 27, 2008 </span><br><span class="line">	 * @since 1.0.0</span><br><span class="line">	 */</span><br><span class="line">	public static ApplicationContext getContext()&#123;</span><br><span class="line">		</span><br><span class="line">		if(context == null)&#123;</span><br><span class="line">			</span><br><span class="line">			initContext(null);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		return context;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	/**</span><br><span class="line">	 * </span><br><span class="line">	 * @methodName 得到spring访问类</span><br><span class="line">	 * @param contextFilePath 配置文件名称</span><br><span class="line">	 * @return</span><br><span class="line">	 * @author ymiao</span><br><span class="line">	 * @DateTime Aug 27, 2008</span><br><span class="line">	 * @since 1.0.0</span><br><span class="line">	 */</span><br><span class="line">	public static ApplicationContext getContext(String contextFilePath)&#123;</span><br><span class="line">		if(context == null)</span><br><span class="line">			initContext(contextFilePath);</span><br><span class="line">		return context;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">	</span><br><span class="line">	/**</span><br><span class="line">	 * @methodName 得到实列bean</span><br><span class="line">	 * @param beanName Bean名称</span><br><span class="line">	 * @return</span><br><span class="line">	 * @author ymiao</span><br><span class="line">	 * @DateTime Aug 27, 2008</span><br><span class="line">	 * @since 1.0.0</span><br><span class="line">	 */</span><br><span class="line">	public static Object getBean(String beanName)</span><br><span class="line">	&#123;</span><br><span class="line">		return getContext().getBean(beanName);		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	/**</span><br><span class="line">	 * @methodName 得到实列bean</span><br><span class="line">	 * @param beanName Bean名称</span><br><span class="line">	 * @param clsType Bean 类</span><br><span class="line">	 * @return</span><br><span class="line">	 * @author ymiao</span><br><span class="line">	 * @DateTime Aug 27, 2008</span><br><span class="line">	 * @since 1.0.0</span><br><span class="line">	 */</span><br><span class="line">	public static Object getBean(String beanName, Class clsType)</span><br><span class="line">	&#123;</span><br><span class="line">		return getContext().getBean(beanName, clsType);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	/**</span><br><span class="line">	 * </span><br><span class="line">	 * @methodName:初始化spring</span><br><span class="line">	 * @param contextFilePath</span><br><span class="line">	 * @author ymiao</span><br><span class="line">	 * @DateTime Aug 27, 2008</span><br><span class="line">	 * @since 1.0.0</span><br><span class="line">	 */</span><br><span class="line">	private static void initContext(String contextFilePath)&#123;</span><br><span class="line">			if(contextFilePath == null)</span><br><span class="line">				contextFilePath = &quot;applicationContext.xml&quot;;</span><br><span class="line">			context = new ClassPathXmlApplicationContext(contextFilePath);		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>CustomizedPropertyPlaceholderConfigurer类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">package cn.com.starit.kanms.util;</span><br><span class="line"></span><br><span class="line">import java.util.HashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line">import java.util.Properties;</span><br><span class="line"></span><br><span class="line">import org.springframework.beans.BeansException;</span><br><span class="line">import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;</span><br><span class="line">import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;</span><br><span class="line"></span><br><span class="line">public class CustomizedPropertyPlaceholderConfigurer extends</span><br><span class="line">		PropertyPlaceholderConfigurer &#123;</span><br><span class="line"></span><br><span class="line">	private static Map&lt;String, Object&gt; ctxPropertiesMap;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	protected void processProperties(</span><br><span class="line">			ConfigurableListableBeanFactory beanFactoryToProcess,</span><br><span class="line">			Properties props) throws BeansException &#123;</span><br><span class="line">		</span><br><span class="line">		super.processProperties(beanFactoryToProcess, props);</span><br><span class="line">		ctxPropertiesMap = new HashMap&lt;String, Object&gt;();</span><br><span class="line">		for (Object key : props.keySet()) &#123;</span><br><span class="line">			String keyStr = key.toString();</span><br><span class="line">			String value = props.getProperty(keyStr);</span><br><span class="line">			ctxPropertiesMap.put(keyStr, value);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public static Object getContextProperty(String name) &#123;</span><br><span class="line">		return ctxPropertiesMap.get(name);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://codecly259.github.io/2016/05/16/2016-01-2016-01-05-spring-send-mail/" data-id="cioa3zqz70002v4xnqrcucl3u" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mail/">mail</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring/">spring</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-2016-01-2016-01-05-linux-boot-startup-oracle-service" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/16/2016-01-2016-01-05-linux-boot-startup-oracle-service/" class="article-date">
+  <time datetime="2016-05-16T14:09:24.304Z" itemprop="datePublished">2016-05-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/dialy/">dialy</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/16/2016-01-2016-01-05-linux-boot-startup-oracle-service/">linux开机自动启动oracle服务</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="本例使用环境"><a href="#本例使用环境" class="headerlink" title="本例使用环境"></a>本例使用环境</h1><ul>
+<li>Linux <code>RedHat6.5</code>发行版_64位</li>
+<li><code>Oracle11g_R2</code>_64位</li>
+<li><code>Xshell 4</code>：远程登录主机软件</li>
+</ul>
+<h1 id="配置步骤"><a href="#配置步骤" class="headerlink" title="配置步骤"></a>配置步骤</h1><p>1.使用root账号登录服务器（可以使用远程登录方法）</p>
+<p>2.更改oratab配置：<br>先使用vim打开<code>/etc/oratab</code>文件</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vim /etc/oratab</span></span><br></pre></td></tr></table></figure>
+<p>将oracle:/opt/oracle/app/product/11.2.0/dbhome_1:N 改为<code>oracle:/opt/oracle/app/product/11.2.0/dbhome_1:Y</code><br>其中：oracle为实例名；/opt/oracle/app/product/11.2.0/dbhome_1为oracle的安装路径，会因安装的情况不同而有所不同。如下图所示：<br><img src="../images/01-05-01-oratab.png" alt="01-05-01-oratab"></p>
+<p>3.更改启动配置文件<code>/etc/rc.d/rc.local</code>文件</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vim /etc/rc.d/rc.local</span></span><br></pre></td></tr></table></figure>
+<p>添加以下两句：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">su oracle -lc <span class="string">"/opt/oracle/app/product/11.2.0/dbhome_1/bin/lsnrctl start"</span></span><br><span class="line">su oracle -lc /opt/oracle/app/product/11.2.0/dbhome_1/bin/dbstart</span><br></pre></td></tr></table></figure>
+<p>其中<code>/opt/oracle/app/product/11.2.0/dbhome_1</code>为oracle安装目录。如下图所示：<br><img src="../images/01-05-02-rc.local.png" alt="01-05-02-rc.local"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://codecly259.github.io/2016/05/16/2016-01-2016-01-05-linux-boot-startup-oracle-service/" data-id="cioa3zqz70001v4xndeimfl4z" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/boot/">boot</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/oracle/">oracle</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-test-hexo" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/16/test-hexo/" class="article-date">
+  <time datetime="2016-05-16T13:02:50.000Z" itemprop="datePublished">2016-05-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/16/test-hexo/">test-hexo</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://codecly259.github.io/2016/05/16/test-hexo/" data-id="cioa0xn5s000178xnwep7e2mt" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/16/hello-world/" class="article-date">
+  <time datetime="2016-05-16T09:02:46.348Z" itemprop="datePublished">2016-05-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/16/hello-world/">Hello World</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://codecly259.github.io/2016/05/16/hello-world/" data-id="cioa0xn5s000078xnk6tlvjzk" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    <a class="extend prev" rel="prev" href="/">&laquo; __('prev')</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorier</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/dialy/">dialy</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/movie/">movie</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/technology/">technology</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ajax/">ajax</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/boot/">boot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/catalina-out/">catalina.out</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/comment/">comment</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cors/">cors</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/disqus/">disqus</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/duoshuo/">duoshuo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jekyll-bootstrap/">jekyll bootstrap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/log/">log</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mail/">mail</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oracle/">oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/play/">play</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sprnig/">sprnig</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/task/">task</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/windows/">windows</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/唐人街探案/">唐人街探案</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/影评/">影评</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/boot/" style="font-size: 10px;">boot</a> <a href="/tags/catalina-out/" style="font-size: 10px;">catalina.out</a> <a href="/tags/comment/" style="font-size: 10px;">comment</a> <a href="/tags/cors/" style="font-size: 10px;">cors</a> <a href="/tags/disqus/" style="font-size: 10px;">disqus</a> <a href="/tags/duoshuo/" style="font-size: 10px;">duoshuo</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/jekyll-bootstrap/" style="font-size: 10px;">jekyll bootstrap</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/log/" style="font-size: 10px;">log</a> <a href="/tags/mail/" style="font-size: 10px;">mail</a> <a href="/tags/oracle/" style="font-size: 10px;">oracle</a> <a href="/tags/play/" style="font-size: 10px;">play</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/sprnig/" style="font-size: 10px;">sprnig</a> <a href="/tags/task/" style="font-size: 10px;">task</a> <a href="/tags/tomcat/" style="font-size: 15px;">tomcat</a> <a href="/tags/windows/" style="font-size: 10px;">windows</a> <a href="/tags/唐人街探案/" style="font-size: 10px;">唐人街探案</a> <a href="/tags/影评/" style="font-size: 10px;">影评</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Arkiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Siste innlegg</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/05/16/2016-03-2016-03-01-using-redis-in-windows/">在windows操作系统中使用redis</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/16/2016-02-2016-02-21-detective-chinatown-short-conetnt/">唐人街探案中的一些对白</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/16/2016-02-2016-02-20-use-jekyll-bootstrap/">快速使用jekyll bootstrap主题</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/16/2016-02-2016-02-04-common-git-comand-line/">一些常用的git命令</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/16/2016-02-2016-02-04-comment-system/">社会化评论系统</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 codecly<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

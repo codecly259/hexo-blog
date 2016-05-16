@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>记一次查看tomcat日志文件的经历 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="事件的起源也就是个查询tocmat中日志的事情。之前的一个定时任务在本地测试没有问题，于是放到生产环境中，过段时间貌似没有产生预期的效果。于是想查看日志看看到底有什么问题。然而，现在问题来了，生产环境中的日志全部打印在默认的文件中，即:{$TOMCAT_HONME}/logs/catalina.out此文件已大量堆积到现在臃肿到几G的地步。偷偷的百度了下怎么查看文件大小：
+123ls -lh ca">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记一次查看tomcat日志文件的经历">
+<meta property="og:url" content="http://codecly259.github.io/2016/05/16/2016-02-2016-02-02-an-experience-to-grep-tomcat-log/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="事件的起源也就是个查询tocmat中日志的事情。之前的一个定时任务在本地测试没有问题，于是放到生产环境中，过段时间貌似没有产生预期的效果。于是想查看日志看看到底有什么问题。然而，现在问题来了，生产环境中的日志全部打印在默认的文件中，即:{$TOMCAT_HONME}/logs/catalina.out此文件已大量堆积到现在臃肿到几G的地步。偷偷的百度了下怎么查看文件大小：
+123ls -lh ca">
+<meta property="og:updated_time" content="2016-05-16T14:10:36.544Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="记一次查看tomcat日志文件的经历">
+<meta name="twitter:description" content="事件的起源也就是个查询tocmat中日志的事情。之前的一个定时任务在本地测试没有问题，于是放到生产环境中，过段时间貌似没有产生预期的效果。于是想查看日志看看到底有什么问题。然而，现在问题来了，生产环境中的日志全部打印在默认的文件中，即:{$TOMCAT_HONME}/logs/catalina.out此文件已大量堆积到现在臃肿到几G的地步。偷偷的百度了下怎么查看文件大小：
+123ls -lh ca">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Søk"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://codecly259.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2016-02-2016-02-02-an-experience-to-grep-tomcat-log" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/16/2016-02-2016-02-02-an-experience-to-grep-tomcat-log/" class="article-date">
+  <time datetime="2016-05-16T14:09:24.349Z" itemprop="datePublished">2016-05-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/dialy/">dialy</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      记一次查看tomcat日志文件的经历
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="事件的起源"><a href="#事件的起源" class="headerlink" title="事件的起源"></a>事件的起源</h1><p>也就是个查询tocmat中日志的事情。之前的一个定时任务在本地测试没有问题，于是放到生产环境中，过段时间貌似没有产生预期的效果。<br>于是想查看日志看看到底有什么问题。然而，现在问题来了，生产环境中的日志全部打印在默认的文件中，即:<code>{$TOMCAT_HONME}/logs/catalina.out</code><br>此文件已大量堆积到现在臃肿到几G的地步。偷偷的百度了下怎么查看文件大小：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ls -lh catalina.out</span><br><span class="line"></span><br><span class="line">-rw-rw-r-- 1 kanms kanms 5.2G Feb  2 15:45 catalina.out</span><br></pre></td></tr></table></figure>
+<p>对，没有看错，<strong>5.2G</strong>!!!</p>
+<h1 id="事件的经历"><a href="#事件的经历" class="headerlink" title="事件的经历"></a>事件的经历</h1><ul>
+<li>首先找下是否有文件异常时自定义的一些打印日志,其中 -n 表示显示行号。</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[kanms@kanms-web logs]$ grep -n <span class="string">"带附件和图片的邮件发送失败！！！"</span> catalina.out</span><br><span class="line">65393183:[kanms-eleManage]  『带附件和图片的邮件发送失败！！！』  (线程名：pool-8-thread-1) cn.com.starit.kanms.util.mail.SendMailUtil(SendMailUtil.java:81) 2016-02-02 00:00:02,616</span><br><span class="line">65393215:[kanms-eleManage]  『带附件和图片的邮件发送失败！！！』  (线程名：pool-7-thread-1) cn.com.starit.kanms.util.mail.SendMailUtil(SendMailUtil.java:81) 2016-02-02 00:00:02,616</span><br></pre></td></tr></table></figure>
+<ul>
+<li>根据显示的信息及时间然后定位需要查看的日志内容，如查看上面第一次出现后的200行日志</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">[kanms@kanms-web logs]$ sed -n <span class="string">"65393183,65393383p"</span> catalina.out</span><br><span class="line">[kanms-eleManage]  『带附件和图片的邮件发送失败！！！』  (线程名：pool-8-thread-1) cn.com.starit.kanms.util.mail.SendMailUtil(SendMailUtil.java:81) 2016-02-02 00:00:02,616</span><br><span class="line">org.springframework.mail.MailSendException: Mail server connection failed; nested exception is javax.mail.MessagingException: Unknown SMTP host: mail.ustcinfo.com;</span><br><span class="line">  nested exception is:</span><br><span class="line">	java.net.UnknownHostException: mail.ustcinfo.com. Failed messages: javax.mail.MessagingException: Unknown SMTP host: mail.ustcinfo.com;</span><br><span class="line">  nested exception is:</span><br><span class="line">	java.net.UnknownHostException: mail.ustcinfo.com; message exception details (1) are:</span><br><span class="line">Failed message 1:</span><br><span class="line">javax.mail.MessagingException: Unknown SMTP host: mail.ustcinfo.com;</span><br><span class="line">  nested exception is:</span><br><span class="line">	java.net.UnknownHostException: mail.ustcinfo.com</span><br><span class="line">	at com.sun.mail.smtp.SMTPTransport.openServer(SMTPTransport.java:1280)</span><br><span class="line">	at com.sun.mail.smtp.SMTPTransport.protocolConnect(SMTPTransport.java:370)</span><br><span class="line">	at javax.mail.Service.connect(Service.java:275)</span><br><span class="line">	at org.springframework.mail.javamail.JavaMailSenderImpl.doSend(JavaMailSenderImpl.java:389)</span><br><span class="line">	at org.springframework.mail.javamail.JavaMailSenderImpl.send(JavaMailSenderImpl.java:340)</span><br><span class="line">	at org.springframework.mail.javamail.JavaMailSenderImpl.send(JavaMailSenderImpl.java:336)</span><br><span class="line">	at cn.com.starit.kanms.util.mail.SendMailUtil.sendFileMail(SendMailUtil.java:78)</span><br><span class="line">	at cn.com.starit.kanms.task.TaskJob.sendMailJob(TaskJob.java:27)</span><br><span class="line">	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)</span><br><span class="line">	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)</span><br><span class="line">	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)</span><br><span class="line">	at java.lang.reflect.Method.invoke(Method.java:606)</span><br><span class="line">	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:64)</span><br><span class="line">	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:53)</span><br><span class="line">	at org.springframework.scheduling.concurrent.ReschedulingRunnable.run(ReschedulingRunnable.java:81)</span><br><span class="line">	at java.util.concurrent.Executors<span class="variable">$RunnableAdapter</span>.call(Executors.java:471)</span><br><span class="line">	at java.util.concurrent.FutureTask.run(FutureTask.java:262)</span><br><span class="line">	at java.util.concurrent.ScheduledThreadPoolExecutor<span class="variable">$ScheduledFutureTask</span>.access<span class="variable">$201</span>(ScheduledThreadPoolExecutor.java:178)</span><br><span class="line">	at java.util.concurrent.ScheduledThreadPoolExecutor<span class="variable">$ScheduledFutureTask</span>.run(ScheduledThreadPoolExecutor.java:292)</span><br><span class="line">	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)</span><br><span class="line">	at java.util.concurrent.ThreadPoolExecutor<span class="variable">$Worker</span>.run(ThreadPoolExecutor.java:615)</span><br><span class="line">	at java.lang.Thread.run(Thread.java:745)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>通过日志发现原来是发送邮件服务器主机mail.ustcinfo.com不通的问题，但是本地使用同样的主机配置又试了一下可以发送</li>
+<li>于是在服务器上ping服务器主机不通。</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[kanms@kanms-web logs]$ ping mail.ustcinfo.com</span><br><span class="line">ping: unknown host mail.ustcinfo.com</span><br></pre></td></tr></table></figure>
+<ul>
+<li>网上查阅之后才知道原来linux服务器上发送接收服务器需要安装sendmail包</li>
+<li>安装后依然无效，可能是配置不正确，目前是把邮箱服务器由域名改成IP</li>
+</ul>
+<h1 id="事件后的思考"><a href="#事件后的思考" class="headerlink" title="事件后的思考"></a>事件后的思考</h1><p>这里不把重点放在sendmail的安装与配置说明上，主要是提出日志的大小和分类上。<br>目前的这种打印日志方式存在很多弊端，可以考虑按照以下方式进行修改：</p>
+<ul>
+<li>按时间分类出文件。比如说一天一个文件，这个使用log4j等日志框架的配置文件即可实现</li>
+<li>按照日志的级别进行分类出文件。比如ERROR以上的放在一个文件中；INFO级别的放一个文件；异常的放一个文件，这可以在输出的时候需要做处理</li>
+<li>按日志内容进行分类。比如登录日志放在一个文件，操作某个重保的表格放一个文件等；这些需要在打印日志的时候注意分类，或者自定义一些常用的打印日志级别</li>
+</ul>
+<p>以上的只是一些设想，具体以能够把日志明确分开和方便定位日志信息为准则，可以交叉使用上面的规则。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://codecly259.github.io/2016/05/16/2016-02-2016-02-02-an-experience-to-grep-tomcat-log/" data-id="cioa40q0z0000tcxni6qzvhs6" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/catalina-out/">catalina.out</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/log/">log</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tomcat/">tomcat</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/05/16/2016-02-2016-02-04-comment-system/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          社会化评论系统
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/05/16/2016-01-2016-01-15-add-crud-module-to-play-framework-app/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">play框架添加crud模块</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorier</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/dialy/">dialy</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/movie/">movie</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/technology/">technology</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ajax/">ajax</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/boot/">boot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/catalina-out/">catalina.out</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/comment/">comment</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cors/">cors</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/disqus/">disqus</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/duoshuo/">duoshuo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jekyll-bootstrap/">jekyll bootstrap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/log/">log</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mail/">mail</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oracle/">oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/play/">play</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sprnig/">sprnig</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/task/">task</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/windows/">windows</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/唐人街探案/">唐人街探案</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/影评/">影评</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/boot/" style="font-size: 10px;">boot</a> <a href="/tags/catalina-out/" style="font-size: 10px;">catalina.out</a> <a href="/tags/comment/" style="font-size: 10px;">comment</a> <a href="/tags/cors/" style="font-size: 10px;">cors</a> <a href="/tags/disqus/" style="font-size: 10px;">disqus</a> <a href="/tags/duoshuo/" style="font-size: 10px;">duoshuo</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/jekyll-bootstrap/" style="font-size: 10px;">jekyll bootstrap</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/log/" style="font-size: 10px;">log</a> <a href="/tags/mail/" style="font-size: 10px;">mail</a> <a href="/tags/oracle/" style="font-size: 10px;">oracle</a> <a href="/tags/play/" style="font-size: 10px;">play</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/sprnig/" style="font-size: 10px;">sprnig</a> <a href="/tags/task/" style="font-size: 10px;">task</a> <a href="/tags/tomcat/" style="font-size: 15px;">tomcat</a> <a href="/tags/windows/" style="font-size: 10px;">windows</a> <a href="/tags/唐人街探案/" style="font-size: 10px;">唐人街探案</a> <a href="/tags/影评/" style="font-size: 10px;">影评</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Arkiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Siste innlegg</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/05/16/2016-03-2016-03-01-using-redis-in-windows/">在windows操作系统中使用redis</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/16/2016-02-2016-02-21-detective-chinatown-short-conetnt/">唐人街探案中的一些对白</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/16/2016-02-2016-02-20-use-jekyll-bootstrap/">快速使用jekyll bootstrap主题</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/16/2016-02-2016-02-04-common-git-comand-line/">一些常用的git命令</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/16/2016-02-2016-02-04-comment-system/">社会化评论系统</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 codecly<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
