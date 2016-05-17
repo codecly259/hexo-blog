@@ -1,0 +1,654 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/hexo-blog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/hexo-blog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/hexo-blog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="tomcat,log,catalina.out," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/hexo-blog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="事件的起源也就是个查询tocmat中日志的事情。之前的一个定时任务在本地测试没有问题，于是放到生产环境中，过段时间貌似没有产生预期的效果。于是想查看日志看看到底有什么问题。然而，现在问题来了，生产环境中的日志全部打印在默认的文件中，即:{$TOMCAT_HONME}/logs/catalina.out此文件已大量堆积到现在臃肿到几G的地步。偷偷的百度了下怎么查看文件大小：
+123ls -lh ca">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记一次查看tomcat日志文件的经历">
+<meta property="og:url" content="http://codecly259.github.io/hexo-blog/2016/05/17/2016-02-2016-02-02-an-experience-to-grep-tomcat-log/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="事件的起源也就是个查询tocmat中日志的事情。之前的一个定时任务在本地测试没有问题，于是放到生产环境中，过段时间貌似没有产生预期的效果。于是想查看日志看看到底有什么问题。然而，现在问题来了，生产环境中的日志全部打印在默认的文件中，即:{$TOMCAT_HONME}/logs/catalina.out此文件已大量堆积到现在臃肿到几G的地步。偷偷的百度了下怎么查看文件大小：
+123ls -lh ca">
+<meta property="og:updated_time" content="2016-05-17T14:27:07.437Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="记一次查看tomcat日志文件的经历">
+<meta name="twitter:description" content="事件的起源也就是个查询tocmat中日志的事情。之前的一个定时任务在本地测试没有问题，于是放到生产环境中，过段时间貌似没有产生预期的效果。于是想查看日志看看到底有什么问题。然而，现在问题来了，生产环境中的日志全部打印在默认的文件中，即:{$TOMCAT_HONME}/logs/catalina.out此文件已大量堆积到现在臃肿到几G的地步。偷偷的百度了下怎么查看文件大小：
+123ls -lh ca">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 13968308,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 记一次查看tomcat日志文件的经历 | Hexo </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/hexo-blog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Hexo</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/hexo-blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/hexo-blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/hexo-blog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                记一次查看tomcat日志文件的经历
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-17T14:27:07+00:00" content="2016-05-17">
+              2016-05-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/hexo-blog/categories/dialy/" itemprop="url" rel="index">
+                    <span itemprop="name">dialy</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/hexo-blog/2016/05/17/2016-02-2016-02-02-an-experience-to-grep-tomcat-log/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/17/2016-02-2016-02-02-an-experience-to-grep-tomcat-log/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="事件的起源"><a href="#事件的起源" class="headerlink" title="事件的起源"></a>事件的起源</h1><p>也就是个查询tocmat中日志的事情。之前的一个定时任务在本地测试没有问题，于是放到生产环境中，过段时间貌似没有产生预期的效果。<br>于是想查看日志看看到底有什么问题。然而，现在问题来了，生产环境中的日志全部打印在默认的文件中，即:<code>{$TOMCAT_HONME}/logs/catalina.out</code><br>此文件已大量堆积到现在臃肿到几G的地步。偷偷的百度了下怎么查看文件大小：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ls -lh catalina.out</span><br><span class="line"></span><br><span class="line">-rw-rw-r-- 1 kanms kanms 5.2G Feb  2 15:45 catalina.out</span><br></pre></td></tr></table></figure>
+<p>对，没有看错，<strong>5.2G</strong>!!!</p>
+<h1 id="事件的经历"><a href="#事件的经历" class="headerlink" title="事件的经历"></a>事件的经历</h1><ul>
+<li>首先找下是否有文件异常时自定义的一些打印日志,其中 -n 表示显示行号。</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[kanms@kanms-web logs]$ grep -n <span class="string">"带附件和图片的邮件发送失败！！！"</span> catalina.out</span><br><span class="line">65393183:[kanms-eleManage]  『带附件和图片的邮件发送失败！！！』  (线程名：pool-8-thread-1) cn.com.starit.kanms.util.mail.SendMailUtil(SendMailUtil.java:81) 2016-02-02 00:00:02,616</span><br><span class="line">65393215:[kanms-eleManage]  『带附件和图片的邮件发送失败！！！』  (线程名：pool-7-thread-1) cn.com.starit.kanms.util.mail.SendMailUtil(SendMailUtil.java:81) 2016-02-02 00:00:02,616</span><br></pre></td></tr></table></figure>
+<ul>
+<li>根据显示的信息及时间然后定位需要查看的日志内容，如查看上面第一次出现后的200行日志</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">[kanms@kanms-web logs]$ sed -n <span class="string">"65393183,65393383p"</span> catalina.out</span><br><span class="line">[kanms-eleManage]  『带附件和图片的邮件发送失败！！！』  (线程名：pool-8-thread-1) cn.com.starit.kanms.util.mail.SendMailUtil(SendMailUtil.java:81) 2016-02-02 00:00:02,616</span><br><span class="line">org.springframework.mail.MailSendException: Mail server connection failed; nested exception is javax.mail.MessagingException: Unknown SMTP host: mail.ustcinfo.com;</span><br><span class="line">  nested exception is:</span><br><span class="line">	java.net.UnknownHostException: mail.ustcinfo.com. Failed messages: javax.mail.MessagingException: Unknown SMTP host: mail.ustcinfo.com;</span><br><span class="line">  nested exception is:</span><br><span class="line">	java.net.UnknownHostException: mail.ustcinfo.com; message exception details (1) are:</span><br><span class="line">Failed message 1:</span><br><span class="line">javax.mail.MessagingException: Unknown SMTP host: mail.ustcinfo.com;</span><br><span class="line">  nested exception is:</span><br><span class="line">	java.net.UnknownHostException: mail.ustcinfo.com</span><br><span class="line">	at com.sun.mail.smtp.SMTPTransport.openServer(SMTPTransport.java:1280)</span><br><span class="line">	at com.sun.mail.smtp.SMTPTransport.protocolConnect(SMTPTransport.java:370)</span><br><span class="line">	at javax.mail.Service.connect(Service.java:275)</span><br><span class="line">	at org.springframework.mail.javamail.JavaMailSenderImpl.doSend(JavaMailSenderImpl.java:389)</span><br><span class="line">	at org.springframework.mail.javamail.JavaMailSenderImpl.send(JavaMailSenderImpl.java:340)</span><br><span class="line">	at org.springframework.mail.javamail.JavaMailSenderImpl.send(JavaMailSenderImpl.java:336)</span><br><span class="line">	at cn.com.starit.kanms.util.mail.SendMailUtil.sendFileMail(SendMailUtil.java:78)</span><br><span class="line">	at cn.com.starit.kanms.task.TaskJob.sendMailJob(TaskJob.java:27)</span><br><span class="line">	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)</span><br><span class="line">	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)</span><br><span class="line">	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)</span><br><span class="line">	at java.lang.reflect.Method.invoke(Method.java:606)</span><br><span class="line">	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:64)</span><br><span class="line">	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:53)</span><br><span class="line">	at org.springframework.scheduling.concurrent.ReschedulingRunnable.run(ReschedulingRunnable.java:81)</span><br><span class="line">	at java.util.concurrent.Executors<span class="variable">$RunnableAdapter</span>.call(Executors.java:471)</span><br><span class="line">	at java.util.concurrent.FutureTask.run(FutureTask.java:262)</span><br><span class="line">	at java.util.concurrent.ScheduledThreadPoolExecutor<span class="variable">$ScheduledFutureTask</span>.access<span class="variable">$201</span>(ScheduledThreadPoolExecutor.java:178)</span><br><span class="line">	at java.util.concurrent.ScheduledThreadPoolExecutor<span class="variable">$ScheduledFutureTask</span>.run(ScheduledThreadPoolExecutor.java:292)</span><br><span class="line">	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)</span><br><span class="line">	at java.util.concurrent.ThreadPoolExecutor<span class="variable">$Worker</span>.run(ThreadPoolExecutor.java:615)</span><br><span class="line">	at java.lang.Thread.run(Thread.java:745)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>通过日志发现原来是发送邮件服务器主机mail.ustcinfo.com不通的问题，但是本地使用同样的主机配置又试了一下可以发送</li>
+<li>于是在服务器上ping服务器主机不通。</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[kanms@kanms-web logs]$ ping mail.ustcinfo.com</span><br><span class="line">ping: unknown host mail.ustcinfo.com</span><br></pre></td></tr></table></figure>
+<ul>
+<li>网上查阅之后才知道原来linux服务器上发送接收服务器需要安装sendmail包</li>
+<li>安装后依然无效，可能是配置不正确，目前是把邮箱服务器由域名改成IP</li>
+</ul>
+<h1 id="事件后的思考"><a href="#事件后的思考" class="headerlink" title="事件后的思考"></a>事件后的思考</h1><p>这里不把重点放在sendmail的安装与配置说明上，主要是提出日志的大小和分类上。<br>目前的这种打印日志方式存在很多弊端，可以考虑按照以下方式进行修改：</p>
+<ul>
+<li>按时间分类出文件。比如说一天一个文件，这个使用log4j等日志框架的配置文件即可实现</li>
+<li>按照日志的级别进行分类出文件。比如ERROR以上的放在一个文件中；INFO级别的放一个文件；异常的放一个文件，这可以在输出的时候需要做处理</li>
+<li>按日志内容进行分类。比如登录日志放在一个文件，操作某个重保的表格放一个文件等；这些需要在打印日志的时候注意分类，或者自定义一些常用的打印日志级别</li>
+</ul>
+<p>以上的只是一些设想，具体以能够把日志明确分开和方便定位日志信息为准则，可以交叉使用上面的规则。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/hexo-blog/tags/tomcat/" rel="tag">#tomcat</a>
+          
+            <a href="/hexo-blog/tags/log/" rel="tag">#log</a>
+          
+            <a href="/hexo-blog/tags/catalina-out/" rel="tag">#catalina.out</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/hexo-blog/2016/05/17/2016-02-2016-02-04-comment-system/" rel="next" title="社会化评论系统">
+                <i class="fa fa-chevron-left"></i> 社会化评论系统
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/hexo-blog/2016/05/17/2016-01-2016-01-15-add-crud-module-to-play-framework-app/" rel="prev" title="play框架添加crud模块">
+                play框架添加crud模块 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/05/17/2016-02-2016-02-02-an-experience-to-grep-tomcat-log/"
+           data-title="记一次查看tomcat日志文件的经历" data-url="http://codecly259.github.io/hexo-blog/hexo-blog/2016/05/17/2016-02-2016-02-02-an-experience-to-grep-tomcat-log/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/hexo-blog/images/avatar.jpg"
+               alt="codecly" />
+          <p class="site-author-name" itemprop="name">codecly</p>
+          <p class="site-description motion-element" itemprop="description">千里之提，溃于蚁穴</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/hexo-blog/archives">
+              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/hexo-blog/tags">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#事件的起源"><span class="nav-number">1.</span> <span class="nav-text">事件的起源</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#事件的经历"><span class="nav-number">2.</span> <span class="nav-text">事件的经历</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#事件后的思考"><span class="nav-number">3.</span> <span class="nav-text">事件后的思考</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">codecly</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/hexo-blog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexo-blog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/hexo-blog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexo-blog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/hexo-blog/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexo-blog/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/hexo-blog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/hexo-blog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/hexo-blog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"codecly"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/hexo-blog/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/hexo-blog/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
