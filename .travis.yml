@@ -1,26 +1,22 @@
 language: node_js
 node_js:
-  - stable
-
+- stable
 branches:
   only:
-    - master
+  - master
 before_install:
-  - npm install -g hexo-cli
-
+- npm install -g hexo-cli
 install:
-  - npm install
+- npm install
 script:
-  - hexo generate
+- hexo generate
 after_success:
-  - git config --global user.name "codecly259"
-  - git config --global user.email "maxinchun0215@qq.com"
-#- sed -i'' "/^ *repo/s~github\.com~${GH_TOKEN}@github.com~" _config.yml
-#- hexo deploy
-  - git add .
-  - git commit -m "Update docs"
-  - git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:gh-pages
+- git config --global user.name "codecly259"
+- git config --global user.email "maxinchun0215@qq.com"
+- git add .
+- git commit -m "Update docs"
+- git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:gh-pages
 env:
   global:
-    - GH_REF: github.com/codecly259/hexo-blog.git
-    - secure: YIiIdbK+VdZT1GC+HkUCIIDRWsmE0xzUI+A4rjqb4aF9ctZC3Ncf4oYxA/KuRyEIFmdHPdm0PIU1YeuHfd5rVssNkqRYRwbPFF4ijek4o8mraxB8jxgoijwAZ3Slf4sst72l4m1V03mmhUi8Y9ntbjm7+4jnaA95dMg91Wpbs+PhPKFjwA5wPj+zK0rLAdz/N1RrnEwTCb1XaXKWK+GODMteBTnhscRiTzcwbRwl8hx4TFaD5TIWqejkAVRaWuM/cizrgyFqlKzem521wZdFK4rpGToQLnOAYH+OMM+CqeyjY074eLCl3ekIGo4VYUexHg1uNr/BjP0m1us1j1pD4zOkKnDgPFfh42sOaqsxHKOJMBhAtjeGK58PTdFpgeBRk4kwynlPFBkKNTYi/LID48ESR34XTpuCyf5XOaGc31/0vGltjMwd0hcsw8LZ/5A9ggQ8fGk/4HFrRVK9TmdVWnovtrDpJg6LML8VwiQZMaW0aXS4dOttRDVRkume12Q9HXLBhxMCOCyUzP9X+hm7tu4Fyo4NDBlTEmAcbuvayvO2EFw7ob7S6Lj7EPNXG6MlWiTgI/RKtUWVmI8bzbyXWwPHLS13ZuoFrBcozuo34UNMw54BVArfdiua6TC5sn8BfpsA7GDzjDDxi5wDt4rKGlnUYMPA6qGuLqMNNBONPNA=
+  - GH_REF: github.com/codecly259/hexo-blog.git
+  - secure: VNo0q26Xc3ycDrJpUEnaqf1uNGiHMaqeAGYlaz92YfXv1UWwfAClhnVvxiHlYR76uJGskSf5LK0a88nGA6aoaxAGNIQyVr+gHuGMVqHXfLksTBMwQFVqO4dA+yEJULcfSA73tXPQRGAo7tVtGCRnIuosJxjDPeeGWODfgGBZaYnqnzqK8ENqZsN18/94d8g9uAcJGOPRdBwQBZ4WePrU13+FgQsZvw/cVHCwuKSCk4kKwtubHBarYkdR9/CnGXk4bwcmVS9HCRH4NxgQ6i3mDWgWMJwgBcVkcT54W5wuF8iL4AiV+hgkZIEouOuHDP6CtW0TxDQJWBERsTPeWaahuLBTOfrmFJRh1dnHW0tw6IiNvNwnP4XJvzzzR0+MrB8oNrtlwwjQ2MJu7N9xlLdTiaZGDvPDnlc+zNotwOfV/7reLRscGqm2czUKoJ4vAbk4WFdS6DTteQaIxY/LIWkXuiqEPoQRWPUToIMMDQ0TO+uTsUpflSshefe6kbQHAB4JxUrrydvTKp7n+RuJEb4cIMq9WcragkeMUY3/g1LjmHHYNk+t6M/swLXo9Q8ntgn4qpKATlMn7PW0ENwZsFt3J+6PPBoNFK9N0kt62eRyAPcDxKXMlPagmgLxYxhoOYCtv1y0NW+kNmoSNDRAucg3F9ekXksJjzMPAn784smoDFo=
